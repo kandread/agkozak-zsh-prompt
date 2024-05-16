@@ -858,22 +858,10 @@ prompt_agkozak_precmd() {
   fi
   typeset -gi AGKOZAK_CMD_START_TIME=0
 
-  # Prompt element for virtualenv/venv/pipenv/poetry/conda
+  # Prompt element for nix shell environment
   #
-  # pipenv/poetry: when the virtualenv is in the project directory
-  if [[ ${VIRTUAL_ENV:t} == '.venv' ]]; then
-    psvar[10]=${VIRTUAL_ENV:h:t}
-  # pipenv
-  elif (( PIPENV_ACTIVE )); then
-    # Remove the hash
-    psvar[10]=${${VIRTUAL_ENV%-*}:t}
-  # poetry
-  elif (( POETRY_ACTIVE )); then
-    # Remove the hash and version number
-    psvar[10]=${${${VIRTUAL_ENV%-*}%-*}:t}
-  # virtualenv/venv/conda
-  else
-    psvar[10]=${${VIRTUAL_ENV:t}:-${CONDA_DEFAULT_ENV//[$'\t\r\n']/}}
+  if [[ ${IN_NIX_SHELL} ]]; then
+    psvar[10]=$name
   fi
 
   # Cache the Git version
