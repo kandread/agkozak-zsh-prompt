@@ -862,6 +862,8 @@ prompt_agkozak_precmd() {
   #
   if [[ ${IN_NIX_SHELL} ]]; then
     psvar[10]=$name
+  else
+    psvar[10]=''
   fi
 
   # Cache the Git version
